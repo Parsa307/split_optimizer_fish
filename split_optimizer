@@ -1,0 +1,149 @@
+#!/usr/bin/env fish
+
+set CONFIG_FILE "$HOME/.config/split_optimizer/split_optimizer.conf"
+
+function print_help
+    set script_name (status filename)
+    echo "📦 Optimize APK bundle (.apks, .apkm, .zip, etc.)"
+    echo
+    echo "Usage: $script_name your_app.<ext>"
+    echo
+
+    if not test -f $CONFIG_FILE
+        echo "⚠️  Config file '$CONFIG_FILE' not found."
+    else
+        set bad_keys
+        for key in LANG DPI ARCH
+            set value (grep "^$key=" $CONFIG_FILE | cut -d= -f2 | tr -d ' ')
+            if test -z "$value"
+                set bad_keys $bad_keys $key
+            end
+        end
+
+        if test (count $bad_keys) -gt 0
+            echo "⚠️  Invalid config: Missing or empty keys in $CONFIG_FILE: $bad_keys"
+        else
+            echo "Reads filters from $CONFIG_FILE:"
+            for line in (grep -E '^(LANG|DPI|ARCH)=' $CONFIG_FILE)
+                set key (string split "=" $line)[1]
+                set value (string split "=" $line)[2]
+                echo "  - $key: $value"
+            end
+        end
+    end
+
+    echo
+    echo "Output file: your_app_optimized.<ext>"
+    echo
+    exit 0
+end
+
+# === Check required tools ===
+for dep in unzip zip
+    if not type -q $dep
+        echo "❌ Error: Required command '$dep' not found. Please install it."
+        exit 1
+    end
+end
+
+# === Help flag check ===
+if test (count $argv) -gt 0
+    if test $argv[1] = "-h" || test $argv[1] = "--help"
+        print_help
+    end
+end
+
+# === Usage check ===
+if test (count $argv) -eq 0
+    echo "❌ Invalid usage: Missing input file."
+    echo "Run with -h or --help for usage information."
+    exit 1
+end
+
+# === Load config ===
+if not test -f $CONFIG_FILE
+    echo "❌ Error: Config file '$CONFIG_FILE' not found."
+    exit 1
+end
+
+# Parse config
+set LANGS (string split ',' (grep '^LANG=' $CONFIG_FILE | cut -d= -f2 | tr -d ' '))
+set DPIS  (string split ',' (grep '^DPI='  $CONFIG_FILE | cut -d= -f2 | tr -d ' '))
+set ARCHS (string split ',' (grep '^ARCH=' $CONFIG_FILE | cut -d= -f2 | tr -d ' '))
+
+if test -z "$LANGS" || test -z "$DPIS" || test -z "$ARCHS"
+    echo "❌ Error: Config file is missing required values (LANG, DPI, ARCH)."
+    exit 1
+end
+
+# === Input setup ===
+set INPUT $argv[1]
+set EXT (string split '.' (basename $INPUT))[-1]
+set BASENAME (string replace ".$EXT" '' (basename $INPUT))
+set TMPDIR (mktemp -d)
+function cleanup --on-event fish_exit
+    rm -rf $TMPDIR
+end
+
+echo "[*] Extracting $INPUT to $TMPDIR ..."
+unzip -q "$INPUT" -d "$TMPDIR"
+if test $status -ne 0
+    echo "❌ Failed to unzip $INPUT"
+    exit 1
+end
+
+echo "[*] Filtering APK splits and cleaning up ..."
+
+for entry in $TMPDIR/*
+    set name (basename $entry)
+
+    if test -d $entry
+        echo "  Removing directory: $name"
+        rm -rf $entry
+        continue
+    end
+
+    set keep 0
+    if test "$name" = "base.apk"
+        set keep 1
+    end
+
+    for lang in $LANGS
+        if test "$name" = "split_config.$lang.apk"
+            set keep 1
+        end
+    end
+
+    for dpi in $DPIS
+        if test "$name" = "split_config.$dpi.apk"
+            set keep 1
+        end
+    end
+
+    for arch in $ARCHS
+        if test "$name" = "split_config.$arch.apk"
+            set keep 1
+        end
+    end
+
+    if test $keep -eq 1
+        echo "  Keeping $name"
+    else
+        echo "  Removing $name"
+        rm -f $entry
+    end
+end
+
+set OUTPUT "$BASENAME"_optimized."$EXT"
+set OUTPATH "$PWD/$OUTPUT"
+echo "[*] Creating optimized APK bundle: $OUTPUT"
+
+cd $TMPDIR
+zip -q -r "$OUTPATH" .
+if test $status -ne 0
+    echo "❌ Failed to create $OUTPUT"
+    exit 1
+end
+cd -
+
+echo "[✅] Done! Optimized APK bundle saved as $OUTPUT"
