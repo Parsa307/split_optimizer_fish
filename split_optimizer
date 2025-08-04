@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set CONFIG_FILE "$HOME/.config/split_optimizer/split_optimizer.conf"
+set CONFIG_FILE ~/.config/split_optimizer/split_optimizer.conf
 
 function print_help
     set script_name (status filename)
