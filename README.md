@@ -9,7 +9,7 @@ Optimize your `.apks`, `.apkm`, or `.zip` bundles by keeping only the APK splits
 ### ⚓ Usage
 
 ```bash
-./split_optimizer.fish your_app.apks
+./split_optimizer your_app.apks
 ```
 
 ---
@@ -91,7 +91,7 @@ sudo apt install zip unzip  # For Debian/Ubuntu
 Run the script with `-h` or `--help` for usage and config validation:
 
 ```bash
-./split_optimizer.fish -h
+./split_optimizer -h
 ```
 
 ---
