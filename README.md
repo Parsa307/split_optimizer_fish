@@ -1,4 +1,4 @@
-### 📦 Split Optimizer — Fish Shell Script
+### 📦 Split Optimizer Fish Shell Script
 
 Optimize your `.apks`, `.apkm`, or `.zip` bundles by keeping only the APK splits **you actually need**, based on language, DPI, and architecture filters.
 
