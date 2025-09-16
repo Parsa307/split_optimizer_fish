@@ -16,7 +16,7 @@ function print_help
         for config in LANG DPI ARCH
             set value (grep "^$config=" $CONFIG_FILE | cut -d= -f2 | tr -d ' ')
             if test -z "$value"
-                set bad_keys $bad_configs $config
+                set bad_configs $bad_configs $config
             end
         end
 
@@ -25,7 +25,7 @@ function print_help
         else
             echo "Reads filters from $CONFIG_FILE:"
             for line in (grep -E '^(LANG|DPI|ARCH)=' $CONFIG_FILE)
-                set key (string split "=" $line)[1]
+                set config (string split "=" $line)[1]
                 set value (string split "=" $line)[2]
                 echo "  - $config: $value"
             end
