@@ -10,7 +10,7 @@ function print_help
     echo
 
     if not test -f $CONFIG_FILE
-        echo "⚠️  Config file '$CONFIG_FILE' not found."
+        echo "⚠️ Config file '$CONFIG_FILE' not found."
     else
         set bad_configs
         for config in LANG DPI ARCH
@@ -21,7 +21,7 @@ function print_help
         end
 
         if test (count $bad_configs) -gt 0
-            echo "⚠️  Invalid config: Missing or empty configs in $CONFIG_FILE: $bad_configs"
+            echo "⚠️ Invalid config: Missing or empty configs in $CONFIG_FILE: $bad_configs"
         else
             echo "Configuration from $CONFIG_FILE:"
             for line in (grep -E '^(LANG|DPI|ARCH)=' $CONFIG_FILE)
@@ -62,7 +62,7 @@ end
 
 # === Load config ===
 if not test -f $CONFIG_FILE
-    echo "❌ Error: Config file '$CONFIG_FILE' not found."
+    echo "❌ Error: Config file: '$CONFIG_FILE' not found."
     exit 1
 end
 
@@ -88,7 +88,7 @@ end
 echo "[OPTIMIZER] Extracting $INPUT to $TMPDIR ..."
 unzip -q "$INPUT" -d "$TMPDIR"
 if test $status -ne 0
-    echo "❌ Failed to unzip $INPUT"
+    echo "❌ Failed to unzip: $INPUT"
     exit 1
 end
 
@@ -134,14 +134,14 @@ end
 
 set OUTPUT "$BASENAME"_optimized."$EXT"
 set OUTPATH "$PWD/$OUTPUT"
-echo "[OPTIMIZER] Creating optimized APK bundle: $OUTPUT"
+echo "[OPTIMIZER] Writing optimized APK bundle: $OUTPUT"
 
 cd $TMPDIR
 zip -q -r "$OUTPATH" .
 if test $status -ne 0
-    echo "❌ Failed to create $OUTPUT"
+    echo "❌ Failed to create: $OUTPUT"
     exit 1
 end
 cd -
 
-echo "[✅] Done! Optimized APK bundle saved as $OUTPUT"
+echo "[OPTIMIZER] Saved to: $OUTPUT"
