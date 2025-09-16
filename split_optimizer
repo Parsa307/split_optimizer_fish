@@ -126,9 +126,7 @@ for entry in $TMPDIR/*
         end
     end
 
-    if test $keep -eq 1
-        echo "  Keeping $name"
-    else
+    if not test $keep -eq 1
         rm $entry
     end
 end
