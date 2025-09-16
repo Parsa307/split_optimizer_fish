@@ -92,7 +92,7 @@ if test $status -ne 0
     exit 1
 end
 
-echo "[*] Filtering APK splits and cleaning up ..."
+echo "[*] Removing unnecessary APK splits and cleaning up ..."
 
 for entry in $TMPDIR/*
     set name (basename $entry)
