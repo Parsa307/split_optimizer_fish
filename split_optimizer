@@ -82,7 +82,7 @@ set EXT (string split '.' (basename $INPUT))[-1]
 set BASENAME (string replace ".$EXT" '' (basename $INPUT))
 set TMPDIR (mktemp -d)
 function cleanup --on-event fish_exit
-    rm -rf $TMPDIR
+    rm -r $TMPDIR
 end
 
 echo "[*] Extracting $INPUT to $TMPDIR ..."
@@ -99,7 +99,7 @@ for entry in $TMPDIR/*
 
     if test -d $entry
         echo "  Removing directory: $name"
-        rm -rf $entry
+        rm -r $entry
         continue
     end
 
@@ -130,7 +130,7 @@ for entry in $TMPDIR/*
         echo "  Keeping $name"
     else
         echo "  Removing $name"
-        rm -f $entry
+        rm $entry
     end
 end
 
