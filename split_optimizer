@@ -33,7 +33,7 @@ function print_help
     end
 
     echo
-    echo "Output file: your_app_optimized.<ext>"
+    echo "Output file: example_apk_bundle_optimized.<ext>"
     echo
     exit 0
 end
