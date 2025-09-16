@@ -85,14 +85,14 @@ function cleanup --on-event fish_exit
     rm -r $TMPDIR
 end
 
-echo "[*] Extracting $INPUT to $TMPDIR ..."
+echo "[OPTIMIZER] Extracting $INPUT to $TMPDIR ..."
 unzip -q "$INPUT" -d "$TMPDIR"
 if test $status -ne 0
     echo "❌ Failed to unzip $INPUT"
     exit 1
 end
 
-echo "[*] Removing unnecessary APK splits and cleaning up ..."
+echo "[OPTIMIZER] Removing unnecessary APK splits and cleaning up ..."
 
 for entry in $TMPDIR/*
     set name (basename $entry)
@@ -134,7 +134,7 @@ end
 
 set OUTPUT "$BASENAME"_optimized."$EXT"
 set OUTPATH "$PWD/$OUTPUT"
-echo "[*] Creating optimized APK bundle: $OUTPUT"
+echo "[OPTIMIZER] Creating optimized APK bundle: $OUTPUT"
 
 cd $TMPDIR
 zip -q -r "$OUTPATH" .
