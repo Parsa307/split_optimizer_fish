@@ -51,7 +51,7 @@ The script unpacks the bundle, filters it according to your config, and repacks 
 A new optimized file will be created in the same directory:
 
 ```
-your_app_optimized.apks
+apk_bundle_optimized.apks
 ```
 
 It only includes:
