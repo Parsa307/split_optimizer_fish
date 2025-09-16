@@ -24,7 +24,7 @@ Before using, you **must create a config file** at:
 
 Example configuration:
 
-```ini
+```
 LANG=en,fa
 DPI=hdpi,xhdpi
 ARCH=arm64_v8a,armeabi_v7a
