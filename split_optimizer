@@ -76,11 +76,12 @@ if test -z "$LANGS" || test -z "$DPIS" || test -z "$ARCHS"
     exit 1
 end
 
-# === Input setup ===
+# === Prepare & Cleanup ===
 set INPUT $argv[1]
 set EXT (string split '.' (basename $INPUT))[-1]
 set BASENAME (string replace ".$EXT" '' (basename $INPUT))
-set TMPDIR (mktemp -d)
+mkdir -p "$PWD/$BASENAME"
+set TMPDIR "$PWD/$BASENAME"
 function cleanup --on-event fish_exit
     rm -r $TMPDIR
 end
