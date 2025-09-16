@@ -6,7 +6,7 @@ Optimize your `.apks`, `.apkm`, or `.zip` bundles by keeping only the APK splits
 
 ---
 
-### ✅ Usage
+### ✅ Example Usage:
 
 ```bash
 ./split_optimizer apk_bundle.apks
@@ -14,7 +14,7 @@ Optimize your `.apks`, `.apkm`, or `.zip` bundles by keeping only the APK splits
 
 ---
 
-### 🔧 Configuration
+### 🔧 Configuration:
 
 Before using, you **must create a config file** at:
 
@@ -34,7 +34,7 @@ Each line accepts **comma-separated values**.
 
 ---
 
-### 📥 Input
+### 📥 Input:
 
 Any of the following bundle formats:
 
@@ -46,7 +46,7 @@ The script unpacks the bundle, filters it according to your config, and repacks 
 
 ---
 
-### 📤 Output
+### 📤 Output:
 
 A new optimized file will be created in the same directory:
 
@@ -61,7 +61,7 @@ It only includes:
 
 ---
 
-### 💡 Features
+### 💡 Features:
 
 * ✅ Written in `fish shell`
 * ✅ Configurable filters for LANG, DPI, ARCH
@@ -70,7 +70,7 @@ It only includes:
 
 ---
 
-### 🛠 Requirements
+### 🛠 Requirements:
 
 Ensure the following commands are available:
 
@@ -86,16 +86,10 @@ sudo apt install zip unzip  # For Debian/Ubuntu
 
 ---
 
-### ❓ Help
+### ❓ Help:
 
 Run the script with `-h` or `--help` for usage and config validation:
 
 ```bash
 ./split_optimizer -h
 ```
-
----
-
-### 📄 License
-
-This tool is open to the community under the **MIT License**. Use it freely, modify it boldly, and share improvements.
