@@ -23,7 +23,7 @@ function print_help
         if test (count $bad_configs) -gt 0
             echo "⚠️  Invalid config: Missing or empty configs in $CONFIG_FILE: $bad_configs"
         else
-            echo "Reads filters from $CONFIG_FILE:"
+            echo "Configuration from $CONFIG_FILE:"
             for line in (grep -E '^(LANG|DPI|ARCH)=' $CONFIG_FILE)
                 set config (string split "=" $line)[1]
                 set value (string split "=" $line)[2]
