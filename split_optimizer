@@ -12,16 +12,16 @@ function print_help
     if not test -f $CONFIG_FILE
         echo "⚠️ Config file '$CONFIG_FILE' not found."
     else
-        set bad_configs
+        set wrong_configs
         for config in LANG DPI ARCH
             set value (grep "^$config=" $CONFIG_FILE | cut -d= -f2 | tr -d ' ')
             if test -z "$value"
-                set bad_configs $bad_configs $config
+                set wrong_configs $wrong_configs $config
             end
         end
 
-        if test (count $bad_configs) -gt 0
-            echo "⚠️ Invalid config: Missing or empty configs in $CONFIG_FILE: $bad_configs"
+        if test (count $wrong_configs) -gt 0
+            echo "⚠️ Invalid config: Missing or empty configs in $CONFIG_FILE: $wrong_configs"
         else
             echo "Configuration from $CONFIG_FILE:"
             for line in (grep -E '^(LANG|DPI|ARCH)=' $CONFIG_FILE)
