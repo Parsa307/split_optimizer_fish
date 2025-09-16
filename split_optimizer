@@ -98,7 +98,6 @@ for entry in $TMPDIR/*
     set name (basename $entry)
 
     if test -d $entry
-        echo "  Removing directory: $name"
         rm -r $entry
         continue
     end
