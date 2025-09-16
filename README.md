@@ -9,7 +9,7 @@ Optimize your `.apks`, `.apkm`, or `.zip` bundles by keeping only the APK splits
 ### ✅ Usage
 
 ```bash
-./split_optimizer your_app.apks
+./split_optimizer apk_bundle.apks
 ```
 
 ---
