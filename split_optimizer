@@ -41,7 +41,7 @@ end
 # === Check required tools ===
 for dep in unzip zip
     if not type -q $dep
-        echo "❌ Error Required command '$dep' not found. Please install it."
+        echo "❌ Required command '$dep' not found. Please install it."
         exit 1
     end
 end
@@ -63,14 +63,14 @@ end
 # === Check for existence ===
 set INPUT $argv[1]
 if not test -f "$INPUT"
-    echo "❌ Error Input file: '$INPUT' not found."
+    echo "❌ Input file: '$INPUT' not found."
     echo "Run with -h or --help for usage information."
     exit 1
 end
 
 # === Load config ===
 if not test -f $CONFIG_FILE
-    echo "❌ Error Config file: '$CONFIG_FILE' not found."
+    echo "❌ Config file: '$CONFIG_FILE' not found."
     exit 1
 end
 
@@ -80,7 +80,7 @@ set DPIS  (string split ',' (grep '^DPI='  $CONFIG_FILE | cut -d= -f2 | tr -d ' 
 set ARCHS (string split ',' (grep '^ARCH=' $CONFIG_FILE | cut -d= -f2 | tr -d ' '))
 
 if test -z "$LANGS" || test -z "$DPIS" || test -z "$ARCHS"
-    echo "❌ Error Config file is missing required values (LANG, DPI, ARCH)."
+    echo "❌ Config file is missing required values (LANG, DPI, ARCH)."
     exit 1
 end
 
