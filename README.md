@@ -22,7 +22,7 @@ Before using, you **must create a config file** at:
 ~/.config/split_optimizer/split_optimizer.conf
 ```
 
-Example content:
+Example configuration:
 
 ```ini
 LANG=en,fa
